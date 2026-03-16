@@ -1,0 +1,164 @@
+{
+  "@@locale": "en",
+  "@@last_modified": "2024-01-01T00:00:00.000Z",
+  
+  "appName": "Open Assurance",
+  "@appName": {
+    "description": "The name of the application"
+  },
+  
+  "appTagline": "Words of comfort when you need them most",
+  "@appTagline": {
+    "description": "Tagline for the app"
+  },
+  
+  "home": "Home",
+  "@home": {
+    "description": "Home navigation label"
+  },
+  
+  "favorites": "Favorites",
+  "@favorites": {
+    "description": "Favorites navigation label"
+  },
+  
+  "mood": "Mood",
+  "@mood": {
+    "description": "Mood navigation label"
+  },
+  
+  "breathe": "Breathe",
+  "@breathe": {
+    "description": "Breathing exercise navigation label"
+  },
+  
+  "more": "More",
+  "@more": {
+    "description": "More options navigation label"
+  },
+  
+  "todaysAffirmation": "Today's Affirmation",
+  "@todaysAffirmation": {
+    "description": "Title for today's affirmation"
+  },
+  
+  "newAffirmation": "New Affirmation",
+  "@newAffirmation": {
+    "description": "Button to get a new affirmation"
+  },
+  
+  "categories": "Categories",
+  "@categories": {
+    "description": "Title for categories section"
+  },
+  
+  "howAreYouFeeling": "How are you feeling?",
+  "@howAreYouFeeling": {
+    "description": "Prompt for mood selection"
+  },
+  
+  "moodHistory": "Mood History",
+  "@moodHistory": {
+    "description": "Title for mood history"
+  },
+  
+  "moodTrends": "Mood Trends",
+  "@moodTrends": {
+    "description": "Title for mood trends chart"
+  },
+  
+  "logMood": "Log Mood",
+  "@logMood": {
+    "description": "Button to log mood"
+  },
+  
+  "breathingExercise": "Breathing Exercise",
+  "@breathingExercise": {
+    "description": "Title for breathing exercise"
+  },
+  
+  "start": "Start",
+  "@start": {
+    "description": "Start button"
+  },
+  
+  "pause": "Pause",
+  "@pause": {
+    "description": "Pause button"
+  },
+  
+  "resume": "Resume",
+  "@resume": {
+    "description": "Resume button"
+  },
+  
+  "stop": "Stop",
+  "@stop": {
+    "description": "Stop button"
+  },
+  
+  "crisisResources": "Crisis Resources",
+  "@crisisResources": {
+    "description": "Title for crisis resources"
+  },
+  
+  "youAreNotAlone": "You are not alone.",
+  "@youAreNotAlone": {
+    "description": "Reassuring message"
+  },
+  
+  "ambientSounds": "Ambient Sounds",
+  "@ambientSounds": {
+    "description": "Title for ambient sounds"
+  },
+  
+  "community": "Community",
+  "@community": {
+    "description": "Title for community section"
+  },
+  
+  "settings": "Settings",
+  "@settings": {
+    "description": "Settings title"
+  },
+  
+  "save": "Save",
+  "@save": {
+    "description": "Save button"
+  },
+  
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Cancel button"
+  },
+  
+  "share": "Share",
+  "@share": {
+    "description": "Share button"
+  },
+  
+  "delete": "Delete",
+  "@delete": {
+    "description": "Delete button"
+  },
+  
+  "noFavorites": "No favorites yet",
+  "@noFavorites": {
+    "description": "Empty state for favorites"
+  },
+  
+  "noFavoritesDescription": "Swipe right on affirmations to add them here",
+  "@noFavoritesDescription": {
+    "description": "Description for empty favorites state"
+  },
+  
+  "noMoodData": "No mood data yet",
+  "@noMoodData": {
+    "description": "Empty state for mood data"
+  },
+  
+  "startTracking": "Start tracking your mood to see trends",
+  "@startTracking": {
+    "description": "Prompt to start mood tracking"
+  }
+}
