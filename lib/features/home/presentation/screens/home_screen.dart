@@ -1,0 +1,61 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../../core/widgets/widgets.dart';
+import '../../../affirmations/presentation/providers/affirmation_provider.dart';
+import '../../../affirmations/presentation/widgets/affirmation_card.dart';
+import '../providers/streak_provider.dart';
+import '../widgets/greeting_header.dart';
+import '../widgets/quick_actions.dart';
+import '../widgets/streak_indicator.dart';
+
+class HomeScreen extends ConsumerStatefulWidget {
+  const HomeScreen({super.key});
+
+  @override
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends ConsumerState<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // Check in for streak when home screen loads
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(streakProvider.notifier).checkIn();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final dailyAffirmation = ref.watch(dailyAffirmationProvider);
+
+    return Scaffold(
+      body: SafeArea(
+        child: CustomScrollView(
+          physics: const BouncingScrollPhysics(),
+          slivers: [
+            const SliverToBoxAdapter(child: GreetingHeader()),
+            const SliverToBoxAdapter(child: StreakIndicator()),
+            
+            SliverPadding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+              sliver: SliverToBoxAdapter(
+                child: dailyAffirmation.when(
+                  data: (affirmation) => AffirmationCard(
+                    affirmation: affirmation,
+                  ),
+                  loading: () => const LoadingCard(height: 280),
+                  error: (e, _) => ErrorCard(message: e.toString()),
+                ),
+              ),
+            ),
+
+            const SliverToBoxAdapter(child: QuickActions()),
+            
+            const SliverToBoxAdapter(child: SizedBox(height: 40)),
+          ],
+        ),
+      ),
+    );
+  }
+}
