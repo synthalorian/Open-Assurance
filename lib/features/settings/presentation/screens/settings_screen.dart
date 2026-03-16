@@ -88,7 +88,7 @@ class SettingsScreen extends ConsumerWidget {
             icon: Icons.code_rounded,
             title: 'Open Source',
             subtitle: 'View the code on GitHub',
-            onTap: () => _launchUrl('https://github.com/synthalorian/open-assurance'),
+            onTap: () => _launchUrl('https://github.com/synthalorian/Open-Assurance'),
           ),
           SettingsTile(
             icon: Icons.privacy_tip_rounded,
