@@ -3,15 +3,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/utils/haptic_service.dart';
 import '../../../affirmations/data/models/affirmation.dart';
-import '../../../affirmations/data/repositories/affirmation_repository.dart';
-import '../../../affirmations/data/datasources/affirmation_box.dart';
+import '../providers/affirmation_provider.dart';
 import '../../../affirmations/presentation/widgets/affirmation_card.dart';
 
 // Provider for search
 final searchResultsProvider = FutureProvider.family<List<Affirmation>, String>((ref, query) async {
   if (query.isEmpty) return [];
-  final box = AffirmationBox();
-  final repository = AffirmationRepository(box);
+  final repository = ref.read(affirmationRepositoryProvider);
   return repository.searchAffirmations(query);
 });
 
