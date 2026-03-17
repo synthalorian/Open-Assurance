@@ -7,24 +7,30 @@ final moodRepositoryProvider = Provider<MoodRepository>((ref) {
   return MoodRepository();
 });
 
-// Provider for all mood entries
-final allMoodEntriesProvider = FutureProvider<List<MoodEntry>>((ref) async {
+// FutureProvider to ensure repository is initialized
+final moodRepositoryInitProvider = FutureProvider<void>((ref) async {
   final repository = ref.watch(moodRepositoryProvider);
   await repository.initialize();
+});
+
+// Provider for all mood entries
+final allMoodEntriesProvider = FutureProvider<List<MoodEntry>>((ref) async {
+  await ref.watch(moodRepositoryInitProvider.future);
+  final repository = ref.watch(moodRepositoryProvider);
   return repository.getAllEntries();
 });
 
 // Provider for today's mood entries
 final todayMoodEntriesProvider = FutureProvider<List<MoodEntry>>((ref) async {
+  await ref.watch(moodRepositoryInitProvider.future);
   final repository = ref.watch(moodRepositoryProvider);
-  await repository.initialize();
   return repository.getTodayEntries();
 });
 
 // Provider for this week's mood entries
 final weekMoodEntriesProvider = FutureProvider<List<MoodEntry>>((ref) async {
+  await ref.watch(moodRepositoryInitProvider.future);
   final repository = ref.watch(moodRepositoryProvider);
-  await repository.initialize();
   return repository.getEntriesForLastDays(7);
 });
 
@@ -36,8 +42,8 @@ final moodNotifierProvider = StateNotifierProvider<MoodNotifier, AsyncValue<void
 
 // Provider to check if mood was logged today
 final hasLoggedTodayProvider = FutureProvider<bool>((ref) async {
+  await ref.watch(moodRepositoryInitProvider.future);
   final repository = ref.watch(moodRepositoryProvider);
-  await repository.initialize();
   return repository.getTodayEntries().isNotEmpty;
 });
 
@@ -51,6 +57,7 @@ class MoodNotifier extends StateNotifier<AsyncValue<void>> {
   Future<void> addMoodEntry(int moodLevel, {String? note}) async {
     state = const AsyncValue.loading();
     try {
+      await _ref.read(moodRepositoryInitProvider.future);
       await _repository.addEntry(
         moodLevel: moodLevel,
         moodLabel: MoodLevels.getLabel(moodLevel),
@@ -69,6 +76,7 @@ class MoodNotifier extends StateNotifier<AsyncValue<void>> {
 
   Future<void> deleteMoodEntry(String id) async {
     try {
+      await _ref.read(moodRepositoryInitProvider.future);
       await _repository.deleteEntry(id);
       // Refresh all dependent providers
       _ref.invalidate(hasLoggedTodayProvider);

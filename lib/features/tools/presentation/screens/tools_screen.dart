@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import '../../../../core/constants/app_colors.dart';
 
 class ToolsScreen extends ConsumerWidget {
@@ -22,7 +23,7 @@ class ToolsScreen extends ConsumerWidget {
             description: 'Simple patterns to calm your mind and body.',
             color: AppColors.accent,
             onTap: () => context.go('/tools/breathing'),
-          ),
+          ).animate().fadeIn(duration: 400.ms).slideX(begin: 0.1, end: 0),
           const SizedBox(height: 16),
           _buildToolCard(
             context,
@@ -31,7 +32,7 @@ class ToolsScreen extends ConsumerWidget {
             description: 'Mix sounds of nature to find your center.',
             color: AppColors.primary,
             onTap: () => context.go('/tools/ambient'),
-          ),
+          ).animate().fadeIn(delay: 100.ms, duration: 400.ms).slideX(begin: 0.1, end: 0),
           const SizedBox(height: 16),
           _buildToolCard(
             context,
@@ -40,7 +41,7 @@ class ToolsScreen extends ConsumerWidget {
             description: 'Create and save your own personal words of hope.',
             color: AppColors.secondary,
             onTap: () => context.go('/tools/generator'),
-          ),
+          ).animate().fadeIn(delay: 200.ms, duration: 400.ms).slideX(begin: 0.1, end: 0),
           const SizedBox(height: 16),
           _buildToolCard(
             context,
@@ -49,7 +50,7 @@ class ToolsScreen extends ConsumerWidget {
             description: 'Immediate help is available whenever you need it.',
             color: AppColors.error,
             onTap: () => context.go('/tools/crisis'),
-          ),
+          ).animate().fadeIn(delay: 300.ms, duration: 400.ms).slideX(begin: 0.1, end: 0),
         ],
       ),
     );

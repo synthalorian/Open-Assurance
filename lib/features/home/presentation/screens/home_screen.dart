@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import '../../../../core/widgets/widgets.dart';
 import '../../../affirmations/presentation/providers/affirmation_provider.dart';
 import '../../../affirmations/presentation/widgets/affirmation_card.dart';
@@ -34,8 +35,18 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         child: CustomScrollView(
           physics: const BouncingScrollPhysics(),
           slivers: [
-            const SliverToBoxAdapter(child: GreetingHeader()),
-            const SliverToBoxAdapter(child: StreakIndicator()),
+            SliverToBoxAdapter(
+              child: const GreetingHeader()
+                  .animate()
+                  .fadeIn(duration: 400.ms)
+                  .slideY(begin: -0.1, end: 0),
+            ),
+            SliverToBoxAdapter(
+              child: const StreakIndicator()
+                  .animate()
+                  .fadeIn(delay: 100.ms, duration: 400.ms)
+                  .slideY(begin: 0.1, end: 0),
+            ),
             
             SliverPadding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
@@ -47,10 +58,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   loading: () => const LoadingCard(height: 280),
                   error: (e, _) => ErrorCard(message: e.toString()),
                 ),
-              ),
+              ).animate().fadeIn(delay: 200.ms, duration: 500.ms).scale(begin: const Offset(0.9, 0.9), end: const Offset(1, 1)),
             ),
 
-            const SliverToBoxAdapter(child: QuickActions()),
+            SliverToBoxAdapter(
+              child: const QuickActions()
+                  .animate()
+                  .fadeIn(delay: 300.ms, duration: 400.ms)
+                  .slideY(begin: 0.1, end: 0),
+            ),
             
             const SliverToBoxAdapter(child: SizedBox(height: 40)),
           ],
