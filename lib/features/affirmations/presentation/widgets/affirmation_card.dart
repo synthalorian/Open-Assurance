@@ -7,7 +7,7 @@ import '../../../../core/utils/haptic_service.dart';
 import '../../data/models/affirmation.dart';
 import '../../../favorites/presentation/providers/favorites_provider.dart';
 
-class AffirmationCard extends ConsumerStatefulWidget {
+class AffirmationCard extends ConsumerWidget {
   final Affirmation affirmation;
   final Function(bool isFavorite)? onFavoriteToggle;
 
@@ -18,25 +18,9 @@ class AffirmationCard extends ConsumerStatefulWidget {
   });
 
   @override
-  ConsumerState<AffirmationCard> createState() => _AffirmationCardState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isFavorite = ref.watch(favoritesProvider).isFavorite(affirmation.id);
 
-class _AffirmationCardState extends ConsumerState<AffirmationCard> {
-  bool _isFavorite = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _checkFavoriteStatus();
-  }
-
-  void _checkFavoriteStatus() {
-    _isFavorite = ref.read(favoritesProvider).isFavorite(widget.affirmation.id);
-    setState(() {});
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         gradient: AppColors.cardGradient,
@@ -85,13 +69,13 @@ class _AffirmationCardState extends ConsumerState<AffirmationCard> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Text(
-                              AffirmationCategories.categoryIcons[widget.affirmation.category] ??
+                              AffirmationCategories.categoryIcons[affirmation.category] ??
                                   '✨',
                               style: const TextStyle(fontSize: 14),
                             ),
                             const SizedBox(width: 6),
                             Text(
-                              widget.affirmation.category,
+                              affirmation.category,
                               style: Theme.of(context).textTheme.labelMedium?.copyWith(
                                     color: AppColors.primaryLight,
                                     fontWeight: FontWeight.bold,
@@ -104,7 +88,7 @@ class _AffirmationCardState extends ConsumerState<AffirmationCard> {
                   ),
                   const SizedBox(height: 20),
                   Text(
-                    widget.affirmation.text,
+                    affirmation.text,
                     style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                           height: 1.4,
                           fontWeight: FontWeight.w500,
@@ -114,40 +98,39 @@ class _AffirmationCardState extends ConsumerState<AffirmationCard> {
                   Row(
                     children: [
                       _buildIconButton(
-                        icon: _isFavorite
+                        context,
+                        icon: isFavorite
                             ? Icons.favorite_rounded
                             : Icons.favorite_border_rounded,
-                        color: _isFavorite ? AppColors.secondary : AppColors.textSecondary,
+                        color: isFavorite ? AppColors.secondary : AppColors.textSecondary,
                         onTap: () async {
                           ref.read(hapticServiceProvider).medium();
-                          if (widget.onFavoriteToggle != null) {
-                            await widget.onFavoriteToggle!(!_isFavorite);
+                          if (onFavoriteToggle != null) {
+                            await onFavoriteToggle!(!isFavorite);
                           } else {
-                            // Direct toggle if no callback
-                            await ref.read(favoritesProvider.notifier).toggleFavorite(widget.affirmation);
+                            await ref.read(favoritesProvider.notifier).toggleFavorite(affirmation);
                           }
-                          setState(() {
-                            _isFavorite = !_isFavorite;
-                          });
                         },
                       ),
                       const SizedBox(width: 12),
                       _buildIconButton(
+                        context,
                         icon: Icons.share_rounded,
                         onTap: () {
                           ref.read(hapticServiceProvider).light();
                           SharingService().shareAffirmation(
-                            widget.affirmation.text,
-                            author: widget.affirmation.author,
+                            affirmation.text,
+                            author: affirmation.author,
                           );
                         },
                       ),
                       const SizedBox(width: 12),
                       _buildIconButton(
+                        context,
                         icon: Icons.copy_rounded,
                         onTap: () {
                           ref.read(hapticServiceProvider).light();
-                          SharingService().copyToClipboard(widget.affirmation.text);
+                          SharingService().copyToClipboard(affirmation.text);
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                               content: Text('Copied to clipboard'),
@@ -167,7 +150,8 @@ class _AffirmationCardState extends ConsumerState<AffirmationCard> {
     ).animate().fadeIn(duration: 400.ms).scale(begin: const Offset(0.95, 0.95), end: const Offset(1, 1));
   }
 
-  Widget _buildIconButton({
+  Widget _buildIconButton(
+    BuildContext context, {
     required IconData icon,
     required VoidCallback onTap,
     Color? color,

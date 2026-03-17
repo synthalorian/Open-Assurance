@@ -31,7 +31,7 @@ final weekMoodEntriesProvider = FutureProvider<List<MoodEntry>>((ref) async {
 // State notifier for mood operations
 final moodNotifierProvider = StateNotifierProvider<MoodNotifier, AsyncValue<void>>((ref) {
   final repository = ref.watch(moodRepositoryProvider);
-  return MoodNotifier(repository);
+  return MoodNotifier(repository, ref);
 });
 
 // Provider to check if mood was logged today
@@ -44,8 +44,9 @@ final hasLoggedTodayProvider = FutureProvider<bool>((ref) async {
 // Notifier
 class MoodNotifier extends StateNotifier<AsyncValue<void>> {
   final MoodRepository _repository;
+  final Ref _ref;
 
-  MoodNotifier(this._repository) : super(const AsyncValue.data(null));
+  MoodNotifier(this._repository, this._ref) : super(const AsyncValue.data(null));
 
   Future<void> addMoodEntry(int moodLevel, {String? note}) async {
     state = const AsyncValue.loading();
@@ -56,6 +57,11 @@ class MoodNotifier extends StateNotifier<AsyncValue<void>> {
         note: note,
       );
       state = const AsyncValue.data(null);
+      // Refresh all dependent providers
+      _ref.invalidate(hasLoggedTodayProvider);
+      _ref.invalidate(weekMoodEntriesProvider);
+      _ref.invalidate(todayMoodEntriesProvider);
+      _ref.invalidate(allMoodEntriesProvider);
     } catch (e, st) {
       state = AsyncValue.error(e, st);
     }
@@ -64,6 +70,11 @@ class MoodNotifier extends StateNotifier<AsyncValue<void>> {
   Future<void> deleteMoodEntry(String id) async {
     try {
       await _repository.deleteEntry(id);
+      // Refresh all dependent providers
+      _ref.invalidate(hasLoggedTodayProvider);
+      _ref.invalidate(weekMoodEntriesProvider);
+      _ref.invalidate(todayMoodEntriesProvider);
+      _ref.invalidate(allMoodEntriesProvider);
     } catch (e, st) {
       state = AsyncValue.error(e, st);
     }
