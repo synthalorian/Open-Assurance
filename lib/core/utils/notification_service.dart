@@ -49,51 +49,57 @@ class NotificationService {
   }
 
   Future<void> _createNotificationChannels() async {
-    const AndroidNotificationChannel channel = AndroidNotificationChannel(
-      'daily_affirmations',
-      'Daily Affirmations',
-      description: 'Daily reminders for affirmations',
-      importance: Importance.high,
-      enableVibration: true,
-      enableLights: true,
-      ledColor: Color(0xFF9D4EDD),
-    );
+    final androidImplementation = _notifications
+        .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>();
     
-    await _notifications
-        .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
-        ?.createNotificationChannel(channel);
+    if (androidImplementation != null) {
+      const AndroidNotificationChannel channel = AndroidNotificationChannel(
+        'daily_affirmations',
+        'Daily Affirmations',
+        description: 'Daily reminders for affirmations',
+        importance: Importance.high,
+        enableVibration: true,
+        enableLights: true,
+        ledColor: Color(0xFF9D4EDD),
+      );
+      
+      await androidImplementation.createNotificationChannel(channel);
+    }
   }
 
   void _onNotificationResponse(NotificationResponse response) {
-    // Handle notification tap
-    // Navigate to appropriate screen based on payload
+    // Handle notification tap - navigate to appropriate screen
   }
 
+  /// Request notification permissions
+  /// Returns true if permissions were granted
   Future<bool> requestPermissions() async {
-    // Android 13+ permission request
-    if (Platform.isAndroid) {
-      final androidImplementation = _notifications.resolvePlatformSpecificImplementation
-          <AndroidFlutterLocalNotificationsPlugin>();
-      if (androidImplementation != null) {
-        await androidImplementation.requestNotificationsPermission();
-      }
-    }
+    bool granted = false;
 
-    final iOSImplementation = _notifications.resolvePlatformSpecificImplementation
-        <IOSFlutterLocalNotificationsPlugin>();
-    
-    if (iOSImplementation != null) {
-      return await iOSImplementation.requestPermissions(
+    if (Platform.isAndroid) {
+      final androidImplementation = _notifications
+          .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>();
+      
+      // Request post notifications permission (Android 13+)
+      granted = await androidImplementation?.requestNotificationsPermission() ?? false;
+    } else if (Platform.isIOS) {
+      final iosImplementation = _notifications
+          .resolvePlatformSpecificImplementation<IOSFlutterLocalNotificationsPlugin>();
+      
+      granted = await iosImplementation?.requestPermissions(
         alert: true,
         badge: true,
         sound: true,
       ) ?? false;
+    } else {
+      // For other platforms, assume granted
+      granted = true;
     }
-    
-    return true;
+
+    return granted;
   }
 
-  Future<void> showNotification({
+  Future<void> show({
     required int id,
     required String title,
     required String body,

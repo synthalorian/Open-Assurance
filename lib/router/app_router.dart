@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../features/home/presentation/screens/home_screen.dart';
 import '../features/journal/presentation/screens/journal_screen.dart';
 import '../features/tools/presentation/screens/tools_screen.dart';
 import '../features/settings/presentation/screens/settings_screen.dart';
 import '../features/onboarding/presentation/screens/onboarding_screen.dart';
+import '../features/onboarding/presentation/providers/onboarding_provider.dart';
 import '../features/breathing/presentation/screens/breathing_screen.dart';
 import '../features/ambient/presentation/screens/ambient_sounds_screen.dart';
 import '../features/generator/presentation/screens/generator_screen.dart';
@@ -15,68 +17,72 @@ import '../features/favorites/presentation/screens/favorites_screen.dart';
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
 final GlobalKey<NavigatorState> _shellNavigatorKey = GlobalKey<NavigatorState>();
 
-final goRouter = GoRouter(
-  navigatorKey: _rootNavigatorKey,
-  initialLocation: '/onboarding',
-  routes: [
-    GoRoute(
-      path: '/onboarding',
-      builder: (context, state) => const OnboardingScreen(),
-    ),
-    ShellRoute(
-      navigatorKey: _shellNavigatorKey,
-      builder: (context, state, child) {
-        return ScaffoldWithNavBar(child: child);
-      },
-      routes: [
-        GoRoute(
-          path: '/',
-          builder: (context, state) => const HomeScreen(),
-        ),
-        GoRoute(
-          path: '/journal',
-          builder: (context, state) => const JournalScreen(),
-          routes: [
-            GoRoute(
-              path: 'mood',
-              builder: (context, state) => const MoodScreen(),
-            ),
-            GoRoute(
-              path: 'favorites',
-              builder: (context, state) => const FavoritesScreen(),
-            ),
-          ],
-        ),
-        GoRoute(
-          path: '/tools',
-          builder: (context, state) => const ToolsScreen(),
-          routes: [
-            GoRoute(
-              path: 'breathing',
-              builder: (context, state) => const BreathingScreen(),
-            ),
-            GoRoute(
-              path: 'ambient',
-              builder: (context, state) => const AmbientSoundsScreen(),
-            ),
-            GoRoute(
-              path: 'generator',
-              builder: (context, state) => const GeneratorScreen(),
-            ),
-            GoRoute(
-              path: 'crisis',
-              builder: (context, state) => const CrisisResourcesScreen(),
-            ),
-          ],
-        ),
-        GoRoute(
-          path: '/settings',
-          builder: (context, state) => const SettingsScreen(),
-        ),
-      ],
-    ),
-  ],
-);
+final routerProvider = Provider<GoRouter>((ref) {
+  final isOnboardingComplete = ref.watch(onboardingProvider);
+
+  return GoRouter(
+    navigatorKey: _rootNavigatorKey,
+    initialLocation: isOnboardingComplete ? '/' : '/onboarding',
+    routes: [
+      GoRoute(
+        path: '/onboarding',
+        builder: (context, state) => const OnboardingScreen(),
+      ),
+      ShellRoute(
+        navigatorKey: _shellNavigatorKey,
+        builder: (context, state, child) {
+          return ScaffoldWithNavBar(child: child);
+        },
+        routes: [
+          GoRoute(
+            path: '/',
+            builder: (context, state) => const HomeScreen(),
+          ),
+          GoRoute(
+            path: '/journal',
+            builder: (context, state) => const JournalScreen(),
+            routes: [
+              GoRoute(
+                path: 'mood',
+                builder: (context, state) => const MoodScreen(),
+              ),
+              GoRoute(
+                path: 'favorites',
+                builder: (context, state) => const FavoritesScreen(),
+              ),
+            ],
+          ),
+          GoRoute(
+            path: '/tools',
+            builder: (context, state) => const ToolsScreen(),
+            routes: [
+              GoRoute(
+                path: 'breathing',
+                builder: (context, state) => const BreathingScreen(),
+              ),
+              GoRoute(
+                path: 'ambient',
+                builder: (context, state) => const AmbientSoundsScreen(),
+              ),
+              GoRoute(
+                path: 'generator',
+                builder: (context, state) => const GeneratorScreen(),
+              ),
+              GoRoute(
+                path: 'crisis',
+                builder: (context, state) => const CrisisResourcesScreen(),
+              ),
+            ],
+          ),
+          GoRoute(
+            path: '/settings',
+            builder: (context, state) => const SettingsScreen(),
+          ),
+        ],
+      ),
+    ],
+  );
+});
 
 class ScaffoldWithNavBar extends StatelessWidget {
   final Widget child;
@@ -108,7 +114,7 @@ class ScaffoldWithNavBar extends StatelessWidget {
     if (location == '/') return 0;
     if (location.startsWith('/journal')) return 1;
     if (location.startsWith('/tools')) return 2;
-    if (location == '/settings') return 3;
+    if (location.startsWith('/settings')) return 3;
     return 0;
   }
 
