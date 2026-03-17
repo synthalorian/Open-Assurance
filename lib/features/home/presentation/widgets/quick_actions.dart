@@ -27,7 +27,10 @@ class QuickActions extends ConsumerWidget {
                 icon: Icons.air_rounded,
                 label: 'Breathe',
                 color: AppColors.accent,
-                onTap: () => context.go('/tools/breathing'),
+                onTap: () {
+                  ref.read(hapticServiceProvider).light();
+                  context.go('/tools/breathing');
+                },
               ),
               const SizedBox(width: 12),
               _buildAction(
@@ -35,7 +38,10 @@ class QuickActions extends ConsumerWidget {
                 icon: Icons.sentiment_satisfied_rounded,
                 label: 'Mood',
                 color: AppColors.primary,
-                onTap: () => context.go('/journal/mood'),
+                onTap: () {
+                  ref.read(hapticServiceProvider).light();
+                  context.go('/journal/mood');
+                },
               ),
               const SizedBox(width: 12),
               _buildAction(
@@ -46,7 +52,7 @@ class QuickActions extends ConsumerWidget {
                 onTap: () {
                   ref.read(hapticServiceProvider).light();
                   // Refresh the daily affirmation to get a new random one
-                  ref.read(dailyAffirmationProvider.notifier).loadDailyAffirmation();
+                  ref.read(dailyAffirmationProvider.notifier).refreshRandom();
                 },
               ),
             ],

@@ -1,18 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import '../../../../core/constants/app_colors.dart';
+import '../providers/onboarding_provider.dart';
 
-class OnboardingScreen extends StatefulWidget {
+class OnboardingScreen extends ConsumerStatefulWidget {
   const OnboardingScreen({super.key});
 
   @override
-  State<OnboardingScreen> createState() => _OnboardingScreenState();
+  ConsumerState<OnboardingScreen> createState() => _OnboardingScreenState();
 }
 
-class _OnboardingScreenState extends State<OnboardingScreen> {
+class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   final PageController _pageController = PageController();
   int _currentPage = 0;
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,14 +65,17 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async {
                       if (_currentPage < 2) {
                         _pageController.nextPage(
                           duration: const Duration(milliseconds: 300),
                           curve: Curves.easeInOut,
                         );
                       } else {
-                        context.go('/');
+                        await ref.read(onboardingProvider.notifier).completeOnboarding();
+                        if (mounted) {
+                          context.go('/');
+                        }
                       }
                     },
                     child: Text(_currentPage == 2 ? 'Get Started' : 'Continue'),

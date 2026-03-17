@@ -53,6 +53,16 @@ class DailyAffirmationNotifier extends StateNotifier<AsyncValue<Affirmation>> {
       state = AsyncValue.error(e, st);
     }
   }
+
+  void refreshRandom() {
+    try {
+      state = const AsyncValue.loading();
+      final affirmation = _repository.getRandomAffirmation();
+      state = AsyncValue.data(affirmation);
+    } catch (e, st) {
+      state = AsyncValue.error(e, st);
+    }
+  }
 }
 
 class RandomAffirmationNotifier extends StateNotifier<AsyncValue<Affirmation>> {
