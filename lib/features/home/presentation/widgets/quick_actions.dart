@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/constants/app_colors.dart';
+import '../../../../core/utils/haptic_service.dart';
 import '../../../affirmations/presentation/providers/affirmation_provider.dart';
 
 class QuickActions extends ConsumerWidget {
@@ -26,7 +27,7 @@ class QuickActions extends ConsumerWidget {
                 icon: Icons.air_rounded,
                 label: 'Breathe',
                 color: AppColors.accent,
-                onTap: () => context.go('/tools'), // Navigate to tools for now or specific tool
+                onTap: () => context.go('/tools/breathing'),
               ),
               const SizedBox(width: 12),
               _buildAction(
@@ -34,7 +35,7 @@ class QuickActions extends ConsumerWidget {
                 icon: Icons.sentiment_satisfied_rounded,
                 label: 'Mood',
                 color: AppColors.primary,
-                onTap: () => context.go('/journal'), // Navigate to journal
+                onTap: () => context.go('/journal/mood'),
               ),
               const SizedBox(width: 12),
               _buildAction(
@@ -42,7 +43,11 @@ class QuickActions extends ConsumerWidget {
                 icon: Icons.auto_awesome_rounded,
                 label: 'Random',
                 color: AppColors.secondary,
-                onTap: () => ref.read(randomAffirmationProvider.notifier).refresh(), // Refresh random
+                onTap: () {
+                  ref.read(hapticServiceProvider).light();
+                  // Refresh the daily affirmation to get a new random one
+                  ref.read(dailyAffirmationProvider.notifier).loadDailyAffirmation();
+                },
               ),
             ],
           ),
