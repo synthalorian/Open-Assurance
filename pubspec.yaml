@@ -36,9 +36,6 @@ dependencies:
   # Sharing
   share_plus: ^7.2.1
   
-  # Widgets
-  home_widget: ^0.5.0
-  
   # Utilities
   intl: ^0.19.0
   uuid: ^4.2.1

@@ -1,3 +1,4 @@
+import 'dart:math';
 import '../models/affirmation.dart';
 
 /// Curated collection of affirmations
@@ -636,7 +637,7 @@ class LocalAffirmations {
 
   /// Get random affirmation
   static Affirmation getRandom() {
-    final index = DateTime.now().millisecondsSinceEpoch % allAffirmations.length;
+    final index = Random().nextInt(allAffirmations.length);
     return allAffirmations[index];
   }
 

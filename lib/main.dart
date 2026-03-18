@@ -34,7 +34,6 @@ void main() async {
 
   // Initialize notifications
   await NotificationService().initialize();
-  await NotificationService().requestPermissions();
 
   runApp(
     const ProviderScope(

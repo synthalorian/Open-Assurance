@@ -51,14 +51,18 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             SliverPadding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
               sliver: SliverToBoxAdapter(
-                child: dailyAffirmation.when(
-                  data: (affirmation) => AffirmationCard(
-                    affirmation: affirmation,
-                  ),
-                  loading: () => const LoadingCard(height: 280),
-                  error: (e, _) => ErrorCard(message: e.toString()),
-                ),
-              ).animate().fadeIn(delay: 200.ms, duration: 500.ms).scale(begin: const Offset(0.9, 0.9), end: const Offset(1, 1)),
+                child: dailyAffirmation
+                    .when(
+                      data: (affirmation) => AffirmationCard(
+                        affirmation: affirmation,
+                      ),
+                      loading: () => const LoadingCard(height: 280),
+                      error: (e, _) => ErrorCard(message: e.toString()),
+                    )
+                    .animate()
+                    .fadeIn(delay: 200.ms, duration: 500.ms)
+                    .scale(begin: const Offset(0.9, 0.9), end: const Offset(1, 1)),
+              ),
             ),
 
             SliverToBoxAdapter(
