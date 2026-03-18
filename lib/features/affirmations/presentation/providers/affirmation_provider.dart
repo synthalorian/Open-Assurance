@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../data/datasources/affirmation_box.dart';
 import '../../data/repositories/affirmation_repository.dart';
 import '../../data/models/affirmation.dart';
+import '../../../../core/utils/widget_service.dart';
 
 // Providers
 final affirmationBoxProvider = Provider<AffirmationBox>((ref) {
@@ -16,13 +17,15 @@ final affirmationRepositoryProvider = Provider<AffirmationRepository>((ref) {
 // State for daily affirmation
 final dailyAffirmationProvider = StateNotifierProvider<DailyAffirmationNotifier, AsyncValue<Affirmation>>((ref) {
   final repository = ref.watch(affirmationRepositoryProvider);
-  return DailyAffirmationNotifier(repository);
+  final widgetService = ref.watch(widgetServiceProvider);
+  return DailyAffirmationNotifier(repository, widgetService);
 });
 
 // State for random affirmation
 final randomAffirmationProvider = StateNotifierProvider<RandomAffirmationNotifier, AsyncValue<Affirmation>>((ref) {
   final repository = ref.watch(affirmationRepositoryProvider);
-  return RandomAffirmationNotifier(repository);
+  final widgetService = ref.watch(widgetServiceProvider);
+  return RandomAffirmationNotifier(repository, widgetService);
 });
 
 // State for category affirmations
@@ -40,8 +43,9 @@ final allCategoriesProvider = Provider<List<String>>((ref) {
 // Notifiers
 class DailyAffirmationNotifier extends StateNotifier<AsyncValue<Affirmation>> {
   final AffirmationRepository _repository;
+  final WidgetService _widgetService;
 
-  DailyAffirmationNotifier(this._repository) : super(const AsyncValue.loading()) {
+  DailyAffirmationNotifier(this._repository, this._widgetService) : super(const AsyncValue.loading()) {
     loadDailyAffirmation();
   }
 
@@ -49,6 +53,8 @@ class DailyAffirmationNotifier extends StateNotifier<AsyncValue<Affirmation>> {
     try {
       final affirmation = _repository.getDailyAffirmation();
       state = AsyncValue.data(affirmation);
+      // Update home widget
+      _widgetService.updateAffirmation(affirmation.text, category: affirmation.category);
     } catch (e, st) {
       state = AsyncValue.error(e, st);
     }
@@ -56,9 +62,10 @@ class DailyAffirmationNotifier extends StateNotifier<AsyncValue<Affirmation>> {
 
   void refreshRandom() {
     try {
-      state = const AsyncValue.loading();
       final affirmation = _repository.getRandomAffirmation();
       state = AsyncValue.data(affirmation);
+      // Update home widget
+      _widgetService.updateAffirmation(affirmation.text, category: affirmation.category);
     } catch (e, st) {
       state = AsyncValue.error(e, st);
     }
@@ -67,8 +74,9 @@ class DailyAffirmationNotifier extends StateNotifier<AsyncValue<Affirmation>> {
 
 class RandomAffirmationNotifier extends StateNotifier<AsyncValue<Affirmation>> {
   final AffirmationRepository _repository;
+  final WidgetService _widgetService;
 
-  RandomAffirmationNotifier(this._repository) : super(const AsyncValue.loading()) {
+  RandomAffirmationNotifier(this._repository, this._widgetService) : super(const AsyncValue.loading()) {
     loadRandomAffirmation();
   }
 
@@ -76,6 +84,8 @@ class RandomAffirmationNotifier extends StateNotifier<AsyncValue<Affirmation>> {
     try {
       final affirmation = _repository.getRandomAffirmation(category: category);
       state = AsyncValue.data(affirmation);
+      // Update home widget
+      _widgetService.updateAffirmation(affirmation.text, category: affirmation.category);
     } catch (e, st) {
       state = AsyncValue.error(e, st);
     }
