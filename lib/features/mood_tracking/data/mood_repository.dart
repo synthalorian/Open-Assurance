@@ -4,12 +4,17 @@ import 'models/mood_entry.dart';
 
 /// Repository for managing mood entries
 class MoodRepository {
+  static final MoodRepository _instance = MoodRepository._internal();
+  factory MoodRepository() => _instance;
+  MoodRepository._internal();
+
   static const String _boxName = 'mood_entries';
   Box<MoodEntry>? _box;
   final _uuid = const Uuid();
 
   /// Initialize the repository
   Future<void> initialize() async {
+    if (_box != null && _box!.isOpen) return;
     // Register adapter if not already registered
     if (!Hive.isAdapterRegistered(1)) {
       Hive.registerAdapter(MoodEntryAdapter());
