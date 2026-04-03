@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/constants/app_colors.dart';
+import '../../data/soundscapes.dart';
 import '../../../../core/utils/audio_service.dart';
 import '../providers/ambient_provider.dart';
 
@@ -46,6 +47,62 @@ class AmbientSoundsScreen extends ConsumerWidget {
             ),
           ),
           
+          // Quick Presets
+          SliverPadding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            sliver: SliverToBoxAdapter(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Quick Presets',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  const SizedBox(height: 12),
+                  SizedBox(
+                    height: 80,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: Soundscapes.presets.length,
+                      itemBuilder: (context, index) {
+                        final preset = Soundscapes.presets[index];
+                        return Padding(
+                          padding: const EdgeInsets.only(right: 12),
+                          child: Material(
+                            color: AppColors.backgroundCard,
+                            borderRadius: BorderRadius.circular(16),
+                            child: InkWell(
+                              onTap: () => ref.read(ambientProvider.notifier).loadPreset(preset),
+                              borderRadius: BorderRadius.circular(16),
+                              child: Container(
+                                width: 100,
+                                padding: const EdgeInsets.all(12),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(preset.icon, style: const TextStyle(fontSize: 24)),
+                                    const SizedBox(height: 4),
+                                    Text(
+                                      preset.name,
+                                      style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                                        color: AppColors.primaryLight,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                ],
+              ),
+            ),
+          ),
+
           if (activeSounds.isNotEmpty)
             SliverPadding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
