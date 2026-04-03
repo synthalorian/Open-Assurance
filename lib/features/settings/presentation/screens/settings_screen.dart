@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/theme/theme_provider.dart';
@@ -83,6 +84,14 @@ class SettingsScreen extends ConsumerWidget {
           ),
           
           const SizedBox(height: 32),
+          _buildSectionHeader(context, 'Data'),
+          SettingsTile(
+            icon: Icons.delete_forever_rounded,
+            title: 'Reset All Data',
+            subtitle: 'Clear favorites, mood entries, and settings',
+            onTap: () => _showResetDialog(context, ref),
+          ),
+          const SizedBox(height: 32),
           _buildSectionHeader(context, 'About'),
           SettingsTile(
             icon: Icons.code_rounded,
@@ -151,6 +160,39 @@ class SettingsScreen extends ConsumerWidget {
         ref.read(reminderProvider.notifier).setEnabled(true);
       }
     }
+  }
+
+  void _showResetDialog(BuildContext context, WidgetRef ref) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Reset All Data'),
+        content: const Text(
+          'This will permanently delete all your favorites, mood entries, '
+          'and custom affirmations. This cannot be undone.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () async {
+              Navigator.pop(ctx);
+              await Hive.deleteFromDisk();
+              await Hive.initFlutter();
+              if (context.mounted) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('All data has been reset')),
+                );
+              }
+            },
+            style: TextButton.styleFrom(foregroundColor: Colors.red),
+            child: const Text('Reset Everything'),
+          ),
+        ],
+      ),
+    );
   }
 
   void _showComingSoon(BuildContext context) {
