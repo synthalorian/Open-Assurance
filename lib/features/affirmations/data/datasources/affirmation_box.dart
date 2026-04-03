@@ -1,5 +1,4 @@
 import 'package:hive/hive.dart';
-import '../models/affirmation.dart';
 
 /// Hive box for storing affirmation-related data
 class AffirmationBox {
