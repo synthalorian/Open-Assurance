@@ -5,6 +5,7 @@ import '../datasources/affirmation_box.dart';
 
 /// Repository for managing affirmations
 class AffirmationRepository {
+  // ignore: unused_field
   final AffirmationBox _affirmationBox;
 
   AffirmationRepository(this._affirmationBox);

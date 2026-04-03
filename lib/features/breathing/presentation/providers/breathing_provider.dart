@@ -83,7 +83,6 @@ class BreathingState {
 /// Notifier for managing breathing exercise
 class BreathingNotifier extends StateNotifier<BreathingState> {
   Timer? _timer;
-  BreathingPattern? _selectedPattern;
 
   BreathingNotifier()
       : super(BreathingState(pattern: BreathingPatterns.all.first));
