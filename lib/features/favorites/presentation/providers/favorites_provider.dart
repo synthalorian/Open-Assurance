@@ -7,11 +7,13 @@ class FavoritesState {
   final Set<String> favoriteIds;
   final Map<String, String> favoriteTexts;
   final bool isLoading;
+  final bool isInitialized;
 
   FavoritesState({
     Set<String>? favoriteIds,
     Map<String, String>? favoriteTexts,
     this.isLoading = false,
+    this.isInitialized = false,
   })  : favoriteIds = favoriteIds ?? {},
         favoriteTexts = favoriteTexts ?? {};
 
@@ -19,20 +21,19 @@ class FavoritesState {
     Set<String>? favoriteIds,
     Map<String, String>? favoriteTexts,
     bool? isLoading,
+    bool? isInitialized,
   }) {
     return FavoritesState(
       favoriteIds: favoriteIds ?? this.favoriteIds,
       favoriteTexts: favoriteTexts ?? this.favoriteTexts,
       isLoading: isLoading ?? this.isLoading,
+      isInitialized: isInitialized ?? this.isInitialized,
     );
   }
 
   bool isFavorite(String affirmationId) {
     return favoriteIds.contains(affirmationId);
   }
-
-  /// Alias for compatibility
-  FavoritesState? get valueOrNull => isLoading ? null : this;
 
   String? getFavoriteText(String affirmationId) {
     return favoriteTexts[affirmationId];
@@ -48,50 +49,41 @@ class FavoritesNotifier extends StateNotifier<FavoritesState> {
   final FavoritesRepository _repository;
 
   FavoritesNotifier(this._repository) : super(FavoritesState()) {
-    _loadFavorites();
+    _init();
   }
 
-  Future<void> _loadFavorites() async {
+  Future<void> _init() async {
     state = state.copyWith(isLoading: true);
     try {
+      await _repository.initialize();
       final favorites = _repository.getAllFavorites();
-      state = FavoritesState(
+      state = state.copyWith(
         favoriteIds: favorites.keys.toSet(),
         favoriteTexts: favorites,
         isLoading: false,
+        isInitialized: true,
       );
     } catch (e) {
-      state = state.copyWith(isLoading: false);
+      state = state.copyWith(isLoading: false, isInitialized: false);
     }
   }
 
   Future<bool> toggleFavorite(Affirmation affirmation) async {
+    if (!state.isInitialized) await _init();
+    
     final isFav = state.isFavorite(affirmation.id);
 
     if (isFav) {
-      await _repository.removeFavorite(affirmation.id);
-      final newIds = Set<String>.from(state.favoriteIds)..remove(affirmation.id);
-      final newTexts = Map<String, String>.from(state.favoriteTexts)
-        ..remove(affirmation.id);
-      state = state.copyWith(
-        favoriteIds: newIds,
-        favoriteTexts: newTexts,
-      );
+      await removeFavorite(affirmation.id);
       return false;
     } else {
-      await _repository.addFavorite(affirmation);
-      final newIds = Set<String>.from(state.favoriteIds)..add(affirmation.id);
-      final newTexts = Map<String, String>.from(state.favoriteTexts)
-        ..[affirmation.id] = affirmation.text;
-      state = state.copyWith(
-        favoriteIds: newIds,
-        favoriteTexts: newTexts,
-      );
+      await addFavorite(affirmation);
       return true;
     }
   }
 
   Future<void> addFavorite(Affirmation affirmation) async {
+    if (!state.isInitialized) await _init();
     if (!state.isFavorite(affirmation.id)) {
       await _repository.addFavorite(affirmation);
       final newIds = Set<String>.from(state.favoriteIds)..add(affirmation.id);
@@ -105,6 +97,7 @@ class FavoritesNotifier extends StateNotifier<FavoritesState> {
   }
 
   Future<void> removeFavorite(String affirmationId) async {
+    if (!state.isInitialized) await _init();
     if (state.isFavorite(affirmationId)) {
       await _repository.removeFavorite(affirmationId);
       final newIds = Set<String>.from(state.favoriteIds)..remove(affirmationId);
@@ -118,12 +111,13 @@ class FavoritesNotifier extends StateNotifier<FavoritesState> {
   }
 
   Future<void> clearAll() async {
+    if (!state.isInitialized) await _init();
     await _repository.clearAll();
-    state = FavoritesState();
+    state = FavoritesState(isInitialized: true);
   }
 
   void refresh() {
-    _loadFavorites();
+    _init();
   }
 }
 

@@ -3,11 +3,16 @@ import '../../affirmations/data/models/affirmation.dart';
 
 /// Repository for managing favorite affirmations
 class FavoritesRepository {
+  static final FavoritesRepository _instance = FavoritesRepository._internal();
+  factory FavoritesRepository() => _instance;
+  FavoritesRepository._internal();
+
   static const String _boxName = 'favorites';
   Box<String>? _box;
 
   /// Initialize the favorites box
   Future<void> initialize() async {
+    if (_box != null && _box!.isOpen) return;
     _box = await Hive.openBox<String>(_boxName);
   }
 
