@@ -50,7 +50,7 @@ class FavoritesScreen extends ConsumerWidget {
               width: 80,
               height: 80,
               decoration: BoxDecoration(
-                color: AppColors.primary.withOpacity(0.2),
+                color: AppColors.primary.withValues(alpha: 0.2),
                 shape: BoxShape.circle,
               ),
               child: const Icon(
@@ -95,7 +95,7 @@ class FavoritesScreen extends ConsumerWidget {
           alignment: Alignment.centerRight,
           padding: const EdgeInsets.only(right: 20),
           decoration: BoxDecoration(
-            color: AppColors.error.withOpacity(0.2),
+            color: AppColors.error.withValues(alpha: 0.2),
             borderRadius: BorderRadius.circular(20),
           ),
           child: const Icon(
@@ -127,7 +127,7 @@ class FavoritesScreen extends ConsumerWidget {
                       vertical: 5,
                     ),
                     decoration: BoxDecoration(
-                      color: AppColors.primary.withOpacity(0.2),
+                      color: AppColors.primary.withValues(alpha: 0.2),
                       borderRadius: BorderRadius.circular(16),
                     ),
                     child: Row(
@@ -208,7 +208,7 @@ class FavoritesScreen extends ConsumerWidget {
         child: Container(
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: AppColors.surface.withOpacity(0.5),
+            color: AppColors.surface.withValues(alpha: 0.5),
             borderRadius: BorderRadius.circular(8),
           ),
           child: Icon(

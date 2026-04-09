@@ -165,7 +165,7 @@ class AmbientSoundsScreen extends ConsumerWidget {
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: AppColors.primary.withOpacity(0.1),
+              color: AppColors.primary.withValues(alpha: 0.1),
               shape: BoxShape.circle,
             ),
             child: Text(sound.icon, style: const TextStyle(fontSize: 20)),
@@ -214,7 +214,7 @@ class AmbientSoundsScreen extends ConsumerWidget {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 200),
       decoration: BoxDecoration(
-        color: isActive ? AppColors.primary.withOpacity(0.2) : AppColors.backgroundCard,
+        color: isActive ? AppColors.primary.withValues(alpha: 0.2) : AppColors.backgroundCard,
         borderRadius: BorderRadius.circular(24),
         border: Border.all(
           color: isActive ? AppColors.primaryLight : Colors.transparent,
@@ -222,7 +222,7 @@ class AmbientSoundsScreen extends ConsumerWidget {
         ),
         boxShadow: isActive ? [
           BoxShadow(
-            color: AppColors.primary.withOpacity(0.2),
+            color: AppColors.primary.withValues(alpha: 0.2),
             blurRadius: 8,
             spreadRadius: 2,
           )

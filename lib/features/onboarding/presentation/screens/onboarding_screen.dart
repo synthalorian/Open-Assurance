@@ -121,7 +121,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       height: 8,
       width: isSelected ? 24 : 8,
       decoration: BoxDecoration(
-        color: isSelected ? AppColors.primary : AppColors.textSecondary.withOpacity(0.3),
+        color: isSelected ? AppColors.primary : AppColors.textSecondary.withValues(alpha: 0.3),
         borderRadius: BorderRadius.circular(4),
       ),
     );

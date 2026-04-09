@@ -25,8 +25,8 @@ class CrisisResourcesScreen extends StatelessWidget {
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                   colors: [
-                    AppColors.error.withOpacity(0.2),
-                    AppColors.primary.withOpacity(0.2),
+                    AppColors.error.withValues(alpha: 0.2),
+                    AppColors.primary.withValues(alpha: 0.2),
                   ],
                 ),
                 borderRadius: BorderRadius.circular(24),
@@ -36,7 +36,7 @@ class CrisisResourcesScreen extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      color: AppColors.error.withOpacity(0.2),
+                      color: AppColors.error.withValues(alpha: 0.2),
                       shape: BoxShape.circle,
                     ),
                     child: const Icon(
@@ -77,10 +77,10 @@ class CrisisResourcesScreen extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: AppColors.warning.withOpacity(0.1),
+                  color: AppColors.warning.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(
-                    color: AppColors.warning.withOpacity(0.3),
+                    color: AppColors.warning.withValues(alpha: 0.3),
                   ),
                 ),
                 child: Row(
@@ -208,8 +208,8 @@ class CrisisResourcesScreen extends StatelessWidget {
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
                       color: isWebsite
-                          ? AppColors.info.withOpacity(0.2)
-                          : AppColors.success.withOpacity(0.2),
+                          ? AppColors.info.withValues(alpha: 0.2)
+                          : AppColors.success.withValues(alpha: 0.2),
                       borderRadius: BorderRadius.circular(14),
                     ),
                     child: Icon(

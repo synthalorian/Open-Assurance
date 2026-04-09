@@ -115,10 +115,10 @@ class AppTheme {
       ),
 
       // Card Theme
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         color: cardColor,
         elevation: isDark ? 4 : 2,
-        shadowColor: isDark ? AppColors.primary.withOpacity(0.2) : Colors.black12,
+        shadowColor: isDark ? AppColors.primary.withValues(alpha: 0.2) : Colors.black12,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
         ),
@@ -126,7 +126,7 @@ class AppTheme {
 
       // AppBar Theme
       appBarTheme: AppBarTheme(
-        backgroundColor: backgroundColor.withOpacity(0.9),
+        backgroundColor: backgroundColor.withValues(alpha: 0.9),
         elevation: 0,
         centerTitle: true,
         titleTextStyle: GoogleFonts.comfortaa(
@@ -245,7 +245,7 @@ class AppTheme {
 
       // Divider Theme
       dividerTheme: DividerThemeData(
-        color: textTertiary.withOpacity(0.2),
+        color: textTertiary.withValues(alpha: 0.2),
         thickness: 1,
         space: 32,
       ),
@@ -261,7 +261,7 @@ class AppTheme {
         activeTrackColor: AppColors.primary,
         inactiveTrackColor: surfaceColor,
         thumbColor: AppColors.primaryLight,
-        overlayColor: AppColors.primary.withOpacity(0.2),
+        overlayColor: AppColors.primary.withValues(alpha: 0.2),
       ),
 
       // Switch Theme
@@ -274,14 +274,14 @@ class AppTheme {
         }),
         trackColor: WidgetStateProperty.resolveWith((states) {
           if (states.contains(WidgetState.selected)) {
-            return AppColors.primary.withOpacity(0.5);
+            return AppColors.primary.withValues(alpha: 0.5);
           }
           return surfaceColor;
         }),
       ),
 
       // Dialog Theme
-      dialogTheme: DialogTheme(
+      dialogTheme: DialogThemeData(
         backgroundColor: cardColor,
         elevation: 8,
         shape: RoundedRectangleBorder(
