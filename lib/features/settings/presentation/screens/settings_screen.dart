@@ -201,23 +201,6 @@ class SettingsScreen extends ConsumerWidget {
     );
   }
 
-  void _showLicenses(BuildContext context) {
-    showLicensePage(
-      context: context,
-      applicationName: 'Open Assurance',
-      applicationVersion: '1.0.0',
-      applicationIcon: Container(
-        width: 64,
-        height: 64,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
-          color: AppColors.primary.withOpacity(0.1),
-        ),
-        child: const Center(child: Text('💜', style: TextStyle(fontSize: 32))),
-      ),
-    );
-  }
-
   void _showPrivacy(BuildContext context) {
     showDialog(
       context: context,
