@@ -114,7 +114,7 @@ class _MoodSelectorState extends ConsumerState<MoodSelector> {
           duration: const Duration(milliseconds: 200),
           decoration: BoxDecoration(
             color: isSelected 
-                ? color.withOpacity(0.2) 
+                ? color.withValues(alpha: 0.2) 
                 : AppColors.surface,
             borderRadius: BorderRadius.circular(16),
             border: Border.all(

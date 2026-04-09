@@ -86,7 +86,7 @@ class BreathingScreen extends ConsumerWidget {
                   width: 56,
                   height: 56,
                   decoration: BoxDecoration(
-                    color: Color(pattern.color).withOpacity(0.1),
+                    color: Color(pattern.color).withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: Center(
@@ -227,14 +227,14 @@ class BreathingScreen extends ConsumerWidget {
           height: 140,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: Color(state.pattern.color).withOpacity(0.2),
+            color: Color(state.pattern.color).withValues(alpha: 0.2),
             border: Border.all(
               color: Color(state.pattern.color),
               width: 4,
             ),
             boxShadow: [
               BoxShadow(
-                color: Color(state.pattern.color).withOpacity(0.3),
+                color: Color(state.pattern.color).withValues(alpha: 0.3),
                 blurRadius: 40,
                 spreadRadius: 10,
               ),

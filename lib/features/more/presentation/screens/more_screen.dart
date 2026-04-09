@@ -178,7 +178,7 @@ class MoreScreen extends ConsumerWidget {
                     Divider(
                       height: 1,
                       indent: 60,
-                      color: AppColors.textTertiary.withOpacity(0.1),
+                      color: AppColors.textTertiary.withValues(alpha: 0.1),
                     ),
                 ],
               );
@@ -202,7 +202,7 @@ class MoreScreen extends ConsumerWidget {
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: (item.color ?? AppColors.primary).withOpacity(0.2),
+                  color: (item.color ?? AppColors.primary).withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(14),
                 ),
                 child: Icon(

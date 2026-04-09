@@ -58,7 +58,7 @@ class MoodChart extends StatelessWidget {
             drawVerticalLine: false,
             horizontalInterval: 1,
             getDrawingHorizontalLine: (value) => FlLine(
-              color: AppColors.textTertiary.withOpacity(0.05),
+              color: AppColors.textTertiary.withValues(alpha: 0.05),
               strokeWidth: 1,
             ),
           ),
@@ -107,8 +107,8 @@ class MoodChart extends StatelessWidget {
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                    AppColors.primaryLight.withOpacity(0.2),
-                    AppColors.primaryLight.withOpacity(0.0),
+                    AppColors.primaryLight.withValues(alpha: 0.2),
+                    AppColors.primaryLight.withValues(alpha: 0.0),
                   ],
                 ),
               ),
