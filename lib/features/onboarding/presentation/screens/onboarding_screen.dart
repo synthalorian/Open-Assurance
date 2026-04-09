@@ -73,7 +73,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                         );
                       } else {
                         await ref.read(onboardingProvider.notifier).completeOnboarding();
-                        if (mounted) {
+                        if (context.mounted) {
                           context.go('/');
                         }
                       }

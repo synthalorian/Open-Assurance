@@ -11,7 +11,7 @@ class AmbientSoundsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final activeSounds = ref.watch(ambientProvider);
-    final allSounds = AmbientSounds.allSounds;
+    const allSounds = AmbientSounds.allSounds;
 
     return Scaffold(
       appBar: AppBar(

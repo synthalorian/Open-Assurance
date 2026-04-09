@@ -78,6 +78,7 @@ class _MoodSelectorState extends ConsumerState<MoodSelector> {
                   _selectedMood = null;
                   _noteController.clear();
                 });
+                if (!context.mounted) return;
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
                     content: Text('Mood logged successfully! 💜'),
