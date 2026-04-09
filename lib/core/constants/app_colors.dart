@@ -108,7 +108,7 @@ class AppColors {
   // Glow Effects
   static List<BoxShadow> get neonGlow => [
     BoxShadow(
-      color: primary.withOpacity(0.5),
+      color: primary.withValues(alpha: 0.5),
       blurRadius: 20,
       spreadRadius: 2,
     ),
@@ -116,7 +116,7 @@ class AppColors {
   
   static List<BoxShadow> get accentGlow => [
     BoxShadow(
-      color: accent.withOpacity(0.4),
+      color: accent.withValues(alpha: 0.4),
       blurRadius: 15,
       spreadRadius: 1,
     ),

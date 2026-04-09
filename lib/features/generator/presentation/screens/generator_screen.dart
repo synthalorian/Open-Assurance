@@ -236,7 +236,7 @@ class _GeneratorScreenState extends ConsumerState<GeneratorScreen> {
                 width: 80,
                 height: 80,
                 decoration: BoxDecoration(
-                  color: AppColors.primary.withOpacity(0.2),
+                  color: AppColors.primary.withValues(alpha: 0.2),
                   shape: BoxShape.circle,
                 ),
                 child: const Icon(
@@ -278,7 +278,7 @@ class _GeneratorScreenState extends ConsumerState<GeneratorScreen> {
             alignment: Alignment.centerRight,
             padding: const EdgeInsets.only(right: 20),
             decoration: BoxDecoration(
-              color: AppColors.error.withOpacity(0.2),
+              color: AppColors.error.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(20),
             ),
             child: const Icon(
@@ -302,7 +302,7 @@ class _GeneratorScreenState extends ConsumerState<GeneratorScreen> {
                         vertical: 5,
                       ),
                       decoration: BoxDecoration(
-                        color: AppColors.accent.withOpacity(0.2),
+                        color: AppColors.accent.withValues(alpha: 0.2),
                         borderRadius: BorderRadius.circular(16),
                       ),
                       child: Row(

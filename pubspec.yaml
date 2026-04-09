@@ -24,7 +24,7 @@ dependencies:
   hive_flutter: ^1.1.0
   
   # Notifications
-  flutter_local_notifications: ^16.3.0
+  flutter_local_notifications: ^18.0.0
   timezone: ^0.9.2
   
   # Audio
@@ -37,14 +37,14 @@ dependencies:
   share_plus: ^7.2.1
   
   # Utilities
-  intl: ^0.19.0
+  intl: ^0.20.2
   uuid: ^4.2.1
   path_provider: ^2.1.1
   url_launcher: ^6.2.2
   shared_preferences: ^2.2.2
   
   # UI
-  google_fonts: ^6.1.0
+  google_fonts: ^6.3.3
   flutter_animate: ^4.3.0
   shimmer: ^3.0.0
   

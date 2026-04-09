@@ -212,7 +212,7 @@ class DailyAffirmationScreen extends ConsumerWidget {
                 height: 150,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: AppColors.primary.withOpacity(0.1),
+                  color: AppColors.primary.withValues(alpha: 0.1),
                 ),
               ),
             ),
@@ -231,7 +231,7 @@ class DailyAffirmationScreen extends ConsumerWidget {
                           vertical: 6,
                         ),
                         decoration: BoxDecoration(
-                          color: AppColors.primary.withOpacity(0.2),
+                          color: AppColors.primary.withValues(alpha: 0.2),
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: Row(
@@ -259,7 +259,7 @@ class DailyAffirmationScreen extends ConsumerWidget {
                             vertical: 6,
                           ),
                           decoration: BoxDecoration(
-                            color: AppColors.accent.withOpacity(0.2),
+                            color: AppColors.accent.withValues(alpha: 0.2),
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: Text(
@@ -361,7 +361,7 @@ class DailyAffirmationScreen extends ConsumerWidget {
         child: Container(
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
-            color: AppColors.surface.withOpacity(0.5),
+            color: AppColors.surface.withValues(alpha: 0.5),
             borderRadius: BorderRadius.circular(12),
           ),
           child: Icon(

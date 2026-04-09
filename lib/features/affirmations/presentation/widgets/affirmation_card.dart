@@ -27,7 +27,7 @@ class AffirmationCard extends ConsumerWidget {
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
-            color: AppColors.primary.withOpacity(0.1),
+            color: AppColors.primary.withValues(alpha: 0.1),
             blurRadius: 20,
             offset: const Offset(0, 10),
           ),
@@ -45,7 +45,7 @@ class AffirmationCard extends ConsumerWidget {
                 height: 150,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: AppColors.primary.withOpacity(0.05),
+                  color: AppColors.primary.withValues(alpha: 0.05),
                 ),
               ),
             ),
@@ -62,7 +62,7 @@ class AffirmationCard extends ConsumerWidget {
                           vertical: 6,
                         ),
                         decoration: BoxDecoration(
-                          color: AppColors.primary.withOpacity(0.2),
+                          color: AppColors.primary.withValues(alpha: 0.2),
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: Row(
@@ -164,7 +164,7 @@ class AffirmationCard extends ConsumerWidget {
         child: Container(
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
-            color: AppColors.surface.withOpacity(0.5),
+            color: AppColors.surface.withValues(alpha: 0.5),
             borderRadius: BorderRadius.circular(12),
           ),
           child: Icon(
