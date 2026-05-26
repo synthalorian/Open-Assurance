@@ -112,7 +112,7 @@ class BreathingScreen extends ConsumerWidget {
                     ],
                   ),
                 ),
-                const Icon(
+                Icon(
                   Icons.play_arrow_rounded,
                   color: AppColors.textTertiary,
                 ),

@@ -12,6 +12,7 @@ import '../features/ambient/presentation/screens/ambient_sounds_screen.dart';
 import '../features/generator/presentation/screens/generator_screen.dart';
 import '../features/crisis/presentation/screens/crisis_resources_screen.dart';
 import '../features/mood_tracking/presentation/screens/mood_screen.dart';
+import '../features/affirmations/presentation/screens/categories_screen.dart';
 import '../features/favorites/presentation/screens/favorites_screen.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -37,6 +38,12 @@ final routerProvider = Provider<GoRouter>((ref) {
           GoRoute(
             path: '/',
             builder: (context, state) => const HomeScreen(),
+            routes: [
+              GoRoute(
+                path: 'categories',
+                builder: (context, state) => const CategoriesScreen(),
+              ),
+            ],
           ),
           GoRoute(
             path: '/journal',

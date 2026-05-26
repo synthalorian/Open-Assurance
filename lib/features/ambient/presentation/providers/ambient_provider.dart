@@ -17,24 +17,31 @@ class AmbientNotifier extends StateNotifier<Map<String, double>> {
     await _audioService.initialize();
   }
 
-  Future<void> toggleSound(String fileName) async {
-    if (state.containsKey(fileName)) {
-      await _audioService.stop(fileName);
-      final newState = Map<String, double>.from(state)..remove(fileName);
+  Future<void> toggleSound(String assetPath) async {
+    if (state.containsKey(assetPath)) {
+      await _audioService.stop(assetPath);
+      final newState = Map<String, double>.from(state)..remove(assetPath);
       state = newState;
     } else {
       const initialVolume = 0.5;
-      await _audioService.play(fileName, volume: initialVolume);
-      final newState = Map<String, double>.from(state)..[fileName] = initialVolume;
+      await _audioService.play(assetPath, volume: initialVolume);
+      final newState = Map<String, double>.from(state)..[assetPath] = initialVolume;
       state = newState;
     }
   }
 
-  Future<void> updateVolume(String fileName, double volume) async {
-    if (state.containsKey(fileName)) {
-      await _audioService.setVolume(fileName, volume);
-      final newState = Map<String, double>.from(state)..[fileName] = volume;
+  Future<void> updateVolume(String assetPath, double volume) async {
+    if (state.containsKey(assetPath)) {
+      await _audioService.setVolume(assetPath, volume);
+      final newState = Map<String, double>.from(state)..[assetPath] = volume;
       state = newState;
+    }
+  }
+
+  /// Scale all active sound volumes by a master factor (0.0–1.0)
+  Future<void> setMasterVolume(double masterVolume) async {
+    for (final entry in state.entries) {
+      await _audioService.setVolume(entry.key, entry.value * masterVolume);
     }
   }
 

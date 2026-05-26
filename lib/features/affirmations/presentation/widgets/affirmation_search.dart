@@ -58,7 +58,7 @@ class AffirmationSearchDelegate extends SearchDelegate {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.search_rounded, size: 64, color: AppColors.textTertiary),
+            Icon(Icons.search_rounded, size: 64, color: AppColors.textTertiary),
             const SizedBox(height: 16),
             Text(
               'Search for affirmations...',
@@ -87,7 +87,7 @@ class AffirmationSearchDelegate extends SearchDelegate {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(Icons.sentiment_dissatisfied_rounded, size: 64, color: AppColors.textTertiary),
+                Icon(Icons.sentiment_dissatisfied_rounded, size: 64, color: AppColors.textTertiary),
                 const SizedBox(height: 16),
                 Text(
                   'No affirmations found',
@@ -123,7 +123,7 @@ class AffirmationSearchDelegate extends SearchDelegate {
       error: (e, _) => Center(
         child: Text(
           'Error searching: $e',
-          style: const TextStyle(color: AppColors.error),
+          style: TextStyle(color: AppColors.error),
         ),
       ),
     );

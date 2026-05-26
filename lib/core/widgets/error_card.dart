@@ -29,7 +29,7 @@ class ErrorCard extends StatelessWidget {
               color: AppColors.error.withValues(alpha: 0.2),
               shape: BoxShape.circle,
             ),
-            child: const Icon(
+            child: Icon(
               Icons.error_outline_rounded,
               color: AppColors.error,
               size: 32,

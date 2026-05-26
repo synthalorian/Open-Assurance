@@ -227,7 +227,7 @@ class MoreScreen extends ConsumerWidget {
                   ],
                 ),
               ),
-              const Icon(
+              Icon(
                 Icons.chevron_right_rounded,
                 color: AppColors.textSecondary,
               ),

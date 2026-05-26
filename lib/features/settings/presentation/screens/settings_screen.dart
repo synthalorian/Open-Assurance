@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../../core/constants/app_colors.dart';
@@ -19,8 +20,10 @@ class SettingsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final themeMode = ref.watch(themeModeProvider);
+    final themeState = ref.watch(themeStateProvider);
     final reminderState = ref.watch(reminderProvider);
+    final allThemes = ref.watch(allThemesProvider);
+    final palette = ref.watch(currentPaletteProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -29,26 +32,89 @@ class SettingsScreen extends ConsumerWidget {
       body: ListView(
         padding: const EdgeInsets.all(20),
         children: [
+          // ─── Theme Selector ─────────────────────────────
+          _buildSectionHeader(context, 'Theme'),
+          SizedBox(
+            height: 100,
+            child: ListView.separated(
+              scrollDirection: Axis.horizontal,
+              itemCount: allThemes.length,
+              separatorBuilder: (_, __) => const SizedBox(width: 12),
+              itemBuilder: (context, index) {
+                final theme = allThemes[index];
+                final isActive = theme.id == themeState.config.id;
+                final tPalette = theme.palette;
+
+                return GestureDetector(
+                  onTap: () => ref.read(themeStateProvider.notifier).setTheme(theme),
+                  child: AnimatedContainer(
+                    duration: 200.ms,
+                    width: 90,
+                    decoration: BoxDecoration(
+                      color: tPalette.card,
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(
+                        color: isActive ? tPalette.primaryLight : Colors.transparent,
+                        width: 2,
+                      ),
+                      boxShadow: isActive
+                          ? [
+                              BoxShadow(
+                                color: tPalette.primary.withValues(alpha: 0.3),
+                                blurRadius: 12,
+                                spreadRadius: 1,
+                              )
+                            ]
+                          : null,
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(theme.icon, color: tPalette.primary, size: 28),
+                        const SizedBox(height: 6),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 4),
+                          child: Text(
+                            theme.displayName,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 10,
+                              fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
+                              color: isActive ? tPalette.primaryLight : tPalette.textSecondary,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+
+          // ─── Appearance ────────────────────────────────
+          const SizedBox(height: 32),
           _buildSectionHeader(context, 'Appearance'),
           SettingsTile(
-            icon: Icons.palette_rounded,
-            title: 'Theme',
-            subtitle: themeMode == ThemeMode.dark ? 'Dark Mode' : 'Light Mode',
+            icon: Icons.dark_mode_rounded,
+            title: 'Dark Mode',
+            subtitle: themeState.mode == ThemeMode.dark ? 'Enabled' : 'Disabled',
             trailing: Switch(
-              value: themeMode == ThemeMode.dark,
-              onChanged: (value) => ref.read(themeModeProvider.notifier).setTheme(
+              value: themeState.mode == ThemeMode.dark,
+              onChanged: (value) => ref.read(themeStateProvider.notifier).setMode(
                     value ? ThemeMode.dark : ThemeMode.light,
                   ),
             ),
-            onTap: () => ref.read(themeModeProvider.notifier).toggle(),
+            onTap: () => ref.read(themeStateProvider.notifier).toggleMode(),
           ),
-          
+
+          // ─── Reminders ─────────────────────────────────
           const SizedBox(height: 32),
           _buildSectionHeader(context, 'Reminders'),
           SettingsTile(
             icon: Icons.notifications_rounded,
             title: 'Daily Affirmation',
-            subtitle: reminderState.isEnabled 
+            subtitle: reminderState.isEnabled
                 ? 'Reminder set for ${reminderState.hour.toString().padLeft(2, '0')}:${reminderState.minute.toString().padLeft(2, '0')}'
                 : 'Remind me to take a moment for myself',
             trailing: Switch(
@@ -57,7 +123,22 @@ class SettingsScreen extends ConsumerWidget {
             ),
             onTap: () => _showTimePicker(context, ref, reminderState),
           ),
-          
+
+          // Quick time presets
+          if (reminderState.isEnabled) ...[
+            const SizedBox(height: 12),
+            Row(
+              children: [
+                _buildTimePreset(context, ref, '🌅 Morning', 8, 0),
+                const SizedBox(width: 12),
+                _buildTimePreset(context, ref, '🌙 Evening', 20, 0),
+                const SizedBox(width: 12),
+                _buildTimePreset(context, ref, '☀️ Midday', 12, 0),
+              ],
+            ),
+          ],
+
+          // ─── Support ───────────────────────────────────
           const SizedBox(height: 32),
           _buildSectionHeader(context, 'Support'),
           SettingsTile(
@@ -68,6 +149,7 @@ class SettingsScreen extends ConsumerWidget {
             onTap: () => _launchUrl('https://www.buymeacoffee.com/synthalorian'),
           ),
 
+          // ─── Data ──────────────────────────────────────
           const SizedBox(height: 32),
           _buildSectionHeader(context, 'Data'),
           SettingsTile(
@@ -82,15 +164,19 @@ class SettingsScreen extends ConsumerWidget {
             subtitle: 'Import previously saved data',
             onTap: () => _showComingSoon(context),
           ),
-          
+
+          // ─── Danger Zone ───────────────────────────────
           const SizedBox(height: 32),
-          _buildSectionHeader(context, 'Data'),
+          _buildSectionHeader(context, 'Danger Zone'),
           SettingsTile(
             icon: Icons.delete_forever_rounded,
             title: 'Reset All Data',
             subtitle: 'Clear favorites, mood entries, and settings',
+            iconColor: palette.error,
             onTap: () => _showResetDialog(context, ref),
           ),
+
+          // ─── About ─────────────────────────────────────
           const SizedBox(height: 32),
           _buildSectionHeader(context, 'About'),
           SettingsTile(
@@ -111,13 +197,14 @@ class SettingsScreen extends ConsumerWidget {
             subtitle: 'Made with love for those who need it',
             onTap: () => _showCreditsDialog(context),
           ),
-          
+
+          // ─── Footer ────────────────────────────────────
           const SizedBox(height: 40),
           Center(
             child: Text(
-              'Open Assurance v1.0.0',
+              'Open Assurance v1.1.0',
               style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                    color: AppColors.textTertiary,
+                    color: palette.textTertiary,
                   ),
             ),
           ),
@@ -126,12 +213,30 @@ class SettingsScreen extends ConsumerWidget {
             child: Text(
               'You matter. 💜',
               style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                    color: AppColors.primaryLight,
+                    color: palette.primaryLight,
                   ),
             ),
           ),
           const SizedBox(height: 40),
         ],
+      ),
+    );
+  }
+
+  Widget _buildTimePreset(
+    BuildContext context,
+    WidgetRef ref,
+    String label,
+    int hour,
+    int minute,
+  ) {
+    return Expanded(
+      child: OutlinedButton(
+        onPressed: () => ref.read(reminderProvider.notifier).setTime(hour, minute),
+        style: OutlinedButton.styleFrom(
+          padding: const EdgeInsets.symmetric(vertical: 12),
+        ),
+        child: Text(label, style: const TextStyle(fontSize: 12)),
       ),
     );
   }
@@ -142,17 +247,19 @@ class SettingsScreen extends ConsumerWidget {
       child: Text(
         title,
         style: Theme.of(context).textTheme.labelLarge?.copyWith(
-              color: AppColors.textSecondary,
+              color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
               fontWeight: FontWeight.bold,
             ),
       ),
     );
   }
 
-  void _showTimePicker(BuildContext context, WidgetRef ref, ReminderState reminderState) async {
+  void _showTimePicker(
+      BuildContext context, WidgetRef ref, ReminderState reminderState) async {
     final TimeOfDay? picked = await showTimePicker(
       context: context,
-      initialTime: TimeOfDay(hour: reminderState.hour, minute: reminderState.minute),
+      initialTime:
+          TimeOfDay(hour: reminderState.hour, minute: reminderState.minute),
     );
     if (picked != null) {
       ref.read(reminderProvider.notifier).setTime(picked.hour, picked.minute);
@@ -211,14 +318,10 @@ class SettingsScreen extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
-                'Your Privacy Matters',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
+              Text('Your Privacy Matters',
+                  style: TextStyle(fontWeight: FontWeight.bold)),
               SizedBox(height: 16),
-              Text(
-                'Open Assurance is designed with your privacy in mind:',
-              ),
+              Text('Open Assurance is designed with your privacy in mind:'),
               SizedBox(height: 12),
               Text('• All data stays on your device'),
               Text('• No accounts or sign-ups required'),
@@ -252,12 +355,11 @@ class SettingsScreen extends ConsumerWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Open Assurance',
-              style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-            ),
+            Text('Open Assurance',
+                style: Theme.of(context)
+                    .textTheme
+                    .titleSmall
+                    ?.copyWith(fontWeight: FontWeight.bold)),
             const SizedBox(height: 12),
             const Text('A free, open-source app for mental wellness'),
             const SizedBox(height: 20),
