@@ -112,7 +112,7 @@ class MoodScreen extends ConsumerWidget {
       ),
       child: Column(
         children: [
-          const Icon(Icons.check_circle_outline_rounded, color: AppColors.success, size: 48),
+          Icon(Icons.check_circle_outline_rounded, color: AppColors.success, size: 48),
           const SizedBox(height: 16),
           Text(
             'Mood Logged for Today',

@@ -27,7 +27,7 @@ class StreakIndicator extends ConsumerWidget {
                 color: AppColors.secondary.withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
-              child: const Icon(
+              child: Icon(
                 Icons.local_fire_department_rounded,
                 color: AppColors.secondary,
               ),

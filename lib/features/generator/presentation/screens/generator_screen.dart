@@ -239,7 +239,7 @@ class _GeneratorScreenState extends ConsumerState<GeneratorScreen> {
                   color: AppColors.primary.withValues(alpha: 0.2),
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(
+                child: Icon(
                   Icons.edit_rounded,
                   size: 40,
                   color: AppColors.primaryLight,
@@ -281,7 +281,7 @@ class _GeneratorScreenState extends ConsumerState<GeneratorScreen> {
               color: AppColors.error.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(20),
             ),
-            child: const Icon(
+            child: Icon(
               Icons.delete_rounded,
               color: AppColors.error,
             ),
@@ -308,7 +308,7 @@ class _GeneratorScreenState extends ConsumerState<GeneratorScreen> {
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          const Icon(
+                          Icon(
                             Icons.edit_rounded,
                             size: 12,
                             color: AppColors.accent,

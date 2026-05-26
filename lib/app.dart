@@ -10,28 +10,28 @@ class OpenAssuranceApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final themeMode = ref.watch(themeModeProvider);
+    final themeState = ref.watch(themeStateProvider);
     final router = ref.watch(routerProvider);
 
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
-        statusBarIconBrightness: themeMode == ThemeMode.dark ? Brightness.light : Brightness.dark,
-        systemNavigationBarColor: themeMode == ThemeMode.dark 
-            ? const Color(0xFF10002B) 
+        statusBarIconBrightness:
+            themeState.mode == ThemeMode.dark ? Brightness.light : Brightness.dark,
+        systemNavigationBarColor: themeState.mode == ThemeMode.dark
+            ? const Color(0xFF0D0221)
             : Colors.white,
-        systemNavigationBarIconBrightness: themeMode == ThemeMode.dark 
-            ? Brightness.light 
-            : Brightness.dark,
+        systemNavigationBarIconBrightness:
+            themeState.mode == ThemeMode.dark ? Brightness.light : Brightness.dark,
       ),
     );
 
     return MaterialApp.router(
       title: 'Open Assurance',
       debugShowCheckedModeBanner: false,
-      theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme,
-      themeMode: themeMode,
+      theme: AppTheme.build(themeState.config, Brightness.light),
+      darkTheme: AppTheme.build(themeState.config, Brightness.dark),
+      themeMode: themeState.mode,
       routerConfig: router,
     );
   }
