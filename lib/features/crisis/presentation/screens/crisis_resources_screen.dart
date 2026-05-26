@@ -39,7 +39,7 @@ class CrisisResourcesScreen extends StatelessWidget {
                       color: AppColors.error.withValues(alpha: 0.2),
                       shape: BoxShape.circle,
                     ),
-                    child: const Icon(
+                    child: Icon(
                       Icons.favorite_rounded,
                       color: AppColors.error,
                       size: 32,
@@ -85,7 +85,7 @@ class CrisisResourcesScreen extends StatelessWidget {
                 ),
                 child: Row(
                   children: [
-                    const Icon(
+                    Icon(
                       Icons.warning_amber_rounded,
                       color: AppColors.warning,
                     ),

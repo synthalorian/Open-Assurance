@@ -53,7 +53,7 @@ class FavoritesScreen extends ConsumerWidget {
                 color: AppColors.primary.withValues(alpha: 0.2),
                 shape: BoxShape.circle,
               ),
-              child: const Icon(
+              child: Icon(
                 Icons.favorite_border_rounded,
                 size: 40,
                 color: AppColors.primaryLight,
@@ -98,7 +98,7 @@ class FavoritesScreen extends ConsumerWidget {
             color: AppColors.error.withValues(alpha: 0.2),
             borderRadius: BorderRadius.circular(20),
           ),
-          child: const Icon(
+          child: Icon(
             Icons.delete_rounded,
             color: AppColors.error,
           ),
@@ -148,7 +148,7 @@ class FavoritesScreen extends ConsumerWidget {
                   ),
                   const Spacer(),
                   IconButton(
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.favorite_rounded,
                       color: AppColors.secondary,
                     ),

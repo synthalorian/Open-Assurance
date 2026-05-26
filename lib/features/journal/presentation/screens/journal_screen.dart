@@ -159,7 +159,7 @@ class JournalScreen extends ConsumerWidget {
       ),
       child: Row(
         children: [
-          const Icon(Icons.check_circle_outline_rounded,
+          Icon(Icons.check_circle_outline_rounded,
               color: AppColors.success, size: 40),
           const SizedBox(width: 16),
           Expanded(

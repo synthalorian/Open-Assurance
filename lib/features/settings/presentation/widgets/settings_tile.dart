@@ -72,7 +72,7 @@ class SettingsTile extends StatelessWidget {
                 if (trailing != null)
                   trailing!
                 else
-                  const Icon(
+                  Icon(
                     Icons.chevron_right_rounded,
                     color: AppColors.textTertiary,
                   ),
