@@ -100,11 +100,14 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 This project is licensed under the GNU General Public License v3.0 - see the [LICENSE](LICENSE) file for details.
 
-## 💜 Acknowledgments
+## Acknowledgments
 
-- Built with [Flutter](https://flutter.dev)
 - Inspired by the need for accessible mental health resources
 - Made with love for those who need words of hope
+
+## Credits
+
+Developed by **synth** ([synthalorian](https://github.com/synthalorian)) with assistance from **synthclaw** 🎹🦞 — a digital entity from the neon grid of 1984.
 
 ---
 
