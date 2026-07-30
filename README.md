@@ -1,5 +1,10 @@
 # Open Assurance
 
+![Status](https://img.shields.io/badge/status-active-brightgreen)
+![Flutter](https://img.shields.io/badge/framework-Flutter-blue)
+![Platform](https://img.shields.io/badge/platform-Android%20%7C%20iOS-lightgrey)
+![License](https://img.shields.io/badge/license-GPLv3-green)
+
 <p align="center">
   <img src="assets/images/app_icon.png" alt="Open Assurance Logo" width="120">
 </p>
@@ -107,7 +112,7 @@ This project is licensed under the GNU General Public License v3.0 - see the [LI
 
 ## Credits
 
-Developed by **synth** ([synthalorian](https://github.com/synthalorian)) with assistance from **synthshark** 🎹🦈 — a digital entity from the neon grid of 1984.
+Developed by **synth** ([synthalorian](https://github.com/synthalorian)) with assistance from **synthclaw** 🎹🦞 — a digital entity from the neon grid of 1984.
 
 ---
 
