@@ -122,3 +122,11 @@ If you're in crisis, please reach out:
 - **US**: 988 Suicide & Crisis Lifeline
 - **Text**: HOME to 741741
 - **International**: [befrienders.org](https://www.befrienders.org)
+
+---
+
+## ☕ Support the Developer
+
+If this project saved you time, solved a problem, or just made your day a little more neon, you can fuel the next one:
+
+[![Buy Me A Coffee](https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png)](https://buymeacoffee.com/synthalorian)
