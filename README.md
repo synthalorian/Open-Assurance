@@ -3,7 +3,7 @@
 ![Status](https://img.shields.io/badge/status-active-brightgreen)
 ![Flutter](https://img.shields.io/badge/framework-Flutter-blue)
 ![Platform](https://img.shields.io/badge/platform-Android%20%7C%20iOS-lightgrey)
-![License](https://img.shields.io/badge/license-GPLv3-green)
+![License](https://img.shields.io/badge/license-Apache_2.0-green)
 
 <p align="center">
   <img src="assets/images/app_icon.png" alt="Open Assurance Logo" width="120">
@@ -103,7 +103,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## 📄 License
 
-This project is licensed under the GNU General Public License v3.0 - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the Apache License 2.0 v3.0 - see the [LICENSE](LICENSE) file for details.
 
 ## Acknowledgments
 
