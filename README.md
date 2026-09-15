@@ -112,7 +112,7 @@ This project is licensed under the Apache License 2.0 v3.0 - see the [LICENSE](L
 
 ## Credits
 
-Developed by **synth** with assistance from **synthclaw** 🎹🦞 — a digital entity from the neon grid of 1984.
+Developed by **synth** with assistance from **blackclaw** ⚫🦞 — a digital entity from the neon grid of 1984.
 
 ---
 
