@@ -1,3 +1,5 @@
+![Open-Assurance](.github/preview.png)
+
 # Open Assurance
 
 ![Status](https://img.shields.io/badge/status-active-brightgreen)
